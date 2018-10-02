@@ -8,6 +8,7 @@ import { Input, TextArea, FormBtn } from "../../components/Form";
 import Hero from "../../components/Hero";
 import Nav from "../../components/Nav";
 import SearchForm from "../../components/SearchForm";
+import Youtube from '../../components/Youtube'
 
 
 class Home extends Component {
@@ -60,8 +61,8 @@ class Home extends Component {
     console.log(query)
     API.searchAPI(query)
       .then(res => {
-        this.setState({ apiResults: res })
-        console.log(this.state.apiResults)
+        this.setState({ apiResults: res.data.items })
+        console.log(this.state.apiResults);
       })
       .catch(err => console.log(err));
   };
@@ -99,6 +100,18 @@ class Home extends Component {
           handleFormSubmit={this.handleFormSubmit}
           handleInputChange={this.handleInputChange}
         />
+        <Container>
+        
+         {this.state.apiResults.forEach(result => {
+           <h1 className= {result.id.videoId}>{result.id.videoId}</h1>
+           console.log(result.id.videoId);
+           console.log(result.snippet.title);
+
+           <Youtube src = {"https://www.youtube.com/embed/" + result.id.videoId}></Youtube>
+          
+          })}
+     
+        </Container>
       </Col>
      
     </Container>
