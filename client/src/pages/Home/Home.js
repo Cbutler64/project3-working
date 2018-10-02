@@ -8,7 +8,8 @@ import { Input, TextArea, FormBtn } from "../../components/Form";
 import Hero from "../../components/Hero";
 import Nav from "../../components/Nav";
 import SearchForm from "../../components/SearchForm";
-import Youtube from '../../components/Youtube'
+import Youtube from '../../components/Youtube';
+// import ModalPop from "../../components/Modal"
 
 
 class Home extends Component {
@@ -102,14 +103,22 @@ class Home extends Component {
         />
         <Container>
         
-         {this.state.apiResults.forEach(result => {
-           <h1 className= {result.id.videoId}>{result.id.videoId}</h1>
-           console.log(result.id.videoId);
-           console.log(result.snippet.title);
-
-           <Youtube src = {"https://www.youtube.com/embed/" + result.id.videoId}></Youtube>
+        {this.state.apiResults.length ? (
+              <List>
+                {this.state.apiResults.map(result => (
+                  <ListItem key={result.id.videoId}>
+                    <Youtube src={result.id.videoId}></Youtube>
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+              <h3>No Results to Display</h3>
+            )}
           
-          })}
+     
+          
+         
+          
      
         </Container>
       </Col>

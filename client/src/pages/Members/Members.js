@@ -6,6 +6,8 @@ import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
 import Nav from "../../components/Nav";
+import FriendCard from "../../components/FriendCard";
+import Wrapper from "../../components/Wrapper";
 import { Link } from "react-router-dom";
 class Members extends Component {
   // Setting our component's initial state
@@ -49,6 +51,10 @@ class Members extends Component {
       [name]: value
     });
   };
+  goToFriend = id => {
+    console.log(id);
+    
+  };
 
   // When the form is submitted, use the API.saveBook method to save the book data
   // Then reload books from the database
@@ -73,28 +79,23 @@ class Members extends Component {
       <Container fluid>
       <Nav />
           <Row>
-            <Col size="md-6 sm-12">
+            <Col size="md-12">
               <Jumbotron>
                 <h1>Vfriend Members</h1>
               </Jumbotron>
-              {this.state.users.length ? (
-                <List>
-                  {this.state.users.map(book => {
-                    return (
-                      <ListItem key={book._id}>
-                        <a href={"/books/" + book._id}>
-                          <strong>
-                           Username: {book.username} Photo: {book.photo} Real Name:{book.realname} 
-                          </strong>
-                        </a>
-                        <DeleteBtn onClick={() => this.deleteBook(book._id)} />
-                      </ListItem>
-                    );
-                  })}
-                </List>
-              ) : (
-                <h3>No Results to Display</h3>
-              )}
+              <Wrapper>
+              {this.state.users.map(friend => (
+                <FriendCard
+                goToFriend={this.goToFriend}
+                  id={friend._id}
+                  key={friend._id}
+                  name={friend.username}
+                  image={friend.photo}
+                  realname={friend.realname}
+                  gender={friend.gender}
+                />
+              ))}
+              </Wrapper>
             </Col>
           </Row>
         </Container>
